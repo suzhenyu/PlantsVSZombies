@@ -12,16 +12,21 @@ export class Card extends Component {
     @property(Sprite)
     public cardMask: Sprite = null; // 卡牌遮罩
 
-    start() {
+    @property(Number)
+    public cdTime: number = 2; // 卡牌冷却时间
 
+    private cdTimer: number = 0; // 卡牌冷却计时器
+
+    start() {
+        this.cdTimer = this.cdTime; // 初始化冷却计时器
     }
 
     update(deltaTime: number) {
         switch (this.cardState) {
             case CardState.Cooling:
-                this.CoolingUpdate();
+                this.CoolingUpdate(deltaTime);
                 break;
-            case CardState.Waiting:
+            case CardState.WaitingSun:
                 this.WaitingSunUpdate();
                 break;
             case CardState.Ready:
@@ -32,18 +37,31 @@ export class Card extends Component {
         }
     }
 
-    private CoolingUpdate() {
+    private CoolingUpdate(dt: number) {
+        this.cdTimer -= dt;
+        this.cardMask.fillRange = -(this.cdTimer / this.cdTime);
+        if (this.cdTimer <= 0) {
+            this.transitionToWaitingState();
+        }
     }
-
     private WaitingSunUpdate() {
     }
 
     private ReadyUpdate() {
     }
+
+    transitionToWaitingState() {
+        this.cardState = CardState.WaitingSun;
+
+        this.cardLight.active = false;
+        this.cardGrey.active = true;
+        this.cardMask.node.active = false;
+    }
+
 }
 
 export enum CardState {
     Cooling, // 冷却中
-    Waiting, // 等待阳光充足
+    WaitingSun, // 等待阳光充足
     Ready // 准备种植
 }
