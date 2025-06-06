@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Sprite } from 'cc';
+import { SunManager } from './managers/SunManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('Card')
@@ -16,6 +17,9 @@ export class Card extends Component {
     public cdTime: number = 2; // 卡牌冷却时间
 
     private cdTimer: number = 0; // 卡牌冷却计时器
+
+    @property({ type: Number, tooltip: "卡牌需要的阳光点数" })
+    private needSunPoint: number = 50; // 卡牌需要的阳光点数
 
     start() {
         this.cdTimer = this.cdTime; // 初始化冷却计时器
@@ -41,21 +45,67 @@ export class Card extends Component {
         this.cdTimer -= dt;
         this.cardMask.fillRange = -(this.cdTimer / this.cdTime);
         if (this.cdTimer <= 0) {
-            this.transitionToWaitingState();
+            this.transitionToWaitingSun();
         }
     }
     private WaitingSunUpdate() {
+        if (this.needSunPoint <= SunManager.instance.SunPoint) {
+            this.transitionToReady();
+        }
     }
 
+    /**
+     * 准备种植刷新
+     */
     private ReadyUpdate() {
+        if (this.needSunPoint > SunManager.instance.SunPoint) {
+            this.transitionToWaitingSun();
+        }
     }
 
-    transitionToWaitingState() {
+    /**
+     * 切换到等阳光充足状态
+     */
+    transitionToWaitingSun() {
         this.cardState = CardState.WaitingSun;
 
         this.cardLight.active = false;
         this.cardGrey.active = true;
         this.cardMask.node.active = false;
+    }
+
+    /**
+     * 切换到准备种植状态
+     */
+    transitionToReady() {
+        this.cardState = CardState.Ready;
+
+        this.cardLight.active = true;
+        this.cardGrey.active = false;
+        this.cardMask.node.active = false;
+    }
+
+    /**
+     * 切换到冷却状态
+     */
+    transitionToCooling() {
+        this.cardState = CardState.Cooling;
+
+        this.cdTimer = this.cdTime; // 重置冷却计时器
+
+        this.cardLight.active = false;
+        this.cardGrey.active = true;
+        this.cardMask.node.active = true;
+    }
+
+
+    onClick() {
+        if (this.needSunPoint > SunManager.instance.SunPoint) return;
+
+        // TODO: 开始种植
+        SunManager.instance.subSun(this.needSunPoint);
+
+        this.transitionToCooling();
     }
 
 }

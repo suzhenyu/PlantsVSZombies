@@ -35,10 +35,13 @@
       },
       {
         "__id__": 22
+      },
+      {
+        "__id__": 24
       }
     ],
     "_prefab": {
-      "__id__": 24
+      "__id__": 27
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -72,7 +75,7 @@
   {
     "__type__": "cc.Node",
     "_name": "CardLight",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 1
@@ -208,7 +211,7 @@
   {
     "__type__": "cc.Node",
     "_name": "CardGray",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 1
@@ -344,7 +347,7 @@
   {
     "__type__": "cc.Node",
     "_name": "CardMask",
-    "_objFlags": 0,
+    "_objFlags": 512,
     "__editorExtras__": {},
     "_parent": {
       "__id__": 1
@@ -526,11 +529,83 @@
     "cardMask": {
       "__id__": 17
     },
+    "cdTime": 2,
+    "needSunPoint": 50,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
     "fileId": "40tJ/DAhBELKMWLu0O7ilt"
+  },
+  {
+    "__type__": "cc.Button",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 25
+    },
+    "clickEvents": [
+      {
+        "__id__": 26
+      }
+    ],
+    "_interactable": true,
+    "_transition": 0,
+    "_normalColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_hoverColor": {
+      "__type__": "cc.Color",
+      "r": 211,
+      "g": 211,
+      "b": 211,
+      "a": 255
+    },
+    "_pressedColor": {
+      "__type__": "cc.Color",
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "_disabledColor": {
+      "__type__": "cc.Color",
+      "r": 124,
+      "g": 124,
+      "b": 124,
+      "a": 255
+    },
+    "_normalSprite": null,
+    "_hoverSprite": null,
+    "_pressedSprite": null,
+    "_disabledSprite": null,
+    "_duration": 0.1,
+    "_zoomScale": 1.2,
+    "_target": null,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "29SD26YWpObbh59ER+OcWm"
+  },
+  {
+    "__type__": "cc.ClickEvent",
+    "target": {
+      "__id__": 1
+    },
+    "component": "",
+    "_componentId": "e269clRledGuonD6283fCKx",
+    "handler": "onClick",
+    "customEventData": ""
   },
   {
     "__type__": "cc.PrefabInfo",
