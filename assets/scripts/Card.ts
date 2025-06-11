@@ -1,10 +1,24 @@
-import { _decorator, Component, Node, Sprite } from 'cc';
+import { _decorator, Component, Enum, Node, Sprite } from 'cc';
 import { SunManager } from './managers/SunManager';
 const { ccclass, property } = _decorator;
+
+export enum CardState {
+    Cooling, // 冷却中
+    WaitingSun, // 等待阳光充足
+    Ready // 准备种植
+}
+
+export enum PlantType {
+    Sunflower, // 太阳花
+    Peashooter // 豌豆射手
+}
 
 @ccclass('Card')
 export class Card extends Component {
     private cardState: CardState = CardState.Cooling; // 卡牌的初始状态为冷却中
+
+    @property({ type: Enum(PlantType) })
+    public plantType: PlantType = PlantType.Sunflower;
 
     @property(Node)
     public cardLight: Node = null; // 卡牌亮着的节点
@@ -108,10 +122,4 @@ export class Card extends Component {
         this.transitionToCooling();
     }
 
-}
-
-export enum CardState {
-    Cooling, // 冷却中
-    WaitingSun, // 等待阳光充足
-    Ready // 准备种植
 }
